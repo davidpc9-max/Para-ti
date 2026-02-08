@@ -2,141 +2,79 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Para Ana Lú 🌸</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Para ti, Ana Lú</title>
   <style>
     body {
       margin: 0;
-      min-height: 100vh;
-      background: #f4efe9;
+      height: 100vh;
+      background: #f5efe6;
       font-family: 'Georgia', serif;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       text-align: center;
       overflow: hidden;
     }
 
-    p {
-      font-size: 1.1em;
-      color: #444;
+    .container {
       max-width: 90%;
     }
 
-    .contador {
-      margin-top: 15px;
-      font-size: 1.2em;
-      color: #6b7c6b;
-      font-weight: bold;
+    h1 {
+      font-size: 2.2em;
+      color: #5a6f5a;
+      opacity: 1;
+      transition: opacity 1s ease;
     }
 
-    .petalo {
-      position: fixed;
-      top: -10px;
-      font-size: 12px;
-      animation: caer linear infinite;
-      opacity: 0.8;
+    .hidden {
+      opacity: 0;
       pointer-events: none;
     }
 
-    @keyframes caer {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-      }
+    .photo {
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 2s ease;
     }
 
-    .polaroid {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 1s forwards;
-    }
-
-    .polaroid-content {
+    .photo img {
+      width: 260px;
+      border: 10px solid white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       background: white;
-      padding: 15px 15px 30px;
-      max-width: 80%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
-    .polaroid-content img {
-      width: 100%;
-      display: block;
-      margin-bottom: 15px;
+    .show {
+      opacity: 1;
     }
 
-    .polaroid-content h1 {
-      font-size: 1.6em;
-      color: #5a6f5a;
-      margin: 0;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0 }
-      to { opacity: 1 }
+    .text {
+      margin-top: 15px;
+      font-size: 1.4em;
+      color: #6b4f4f;
     }
   </style>
 </head>
 
-<body>
+<body onclick="reveal()">
+  <div class="container">
+    <h1 id="intro">
+      Han pasado muchos días desde que te conocí…<br>
+      y no necesito un día especial para amarte 💙
+    </h1>
 
-  <p>
-    Han pasado <span id="dias"></span> días,
-    <span id="horas"></span> horas desde que te conocí.
-    <br>
-    Y no necesito un día especial para amarte.
-  </p>
-
-  <div class="contador"></div>
-
-  <p>(Toca la pantalla)</p>
-
-  <div class="polaroid" id="polaroid">
-    <div class="polaroid-content">
+    <div id="photo" class="photo">
       <img src="IMG_2527.jpeg" alt="Nosotros">
-      <h1>¿Quieres ser mi San Valentín? 💙</h1>
+      <div class="text">¿Quieres ser mi San Valentín? 🌸</div>
     </div>
   </div>
 
   <script>
-    const inicio = new Date("2025-08-23T00:00:00");
-
-    function actualizarTiempo() {
-      const ahora = new Date();
-      const diff = ahora - inicio;
-
-      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-
-      document.getElementById("dias").textContent = dias;
-      document.getElementById("horas").textContent = horas;
+    function reveal() {
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('photo').classList.add('show');
     }
-
-    actualizarTiempo();
-    setInterval(actualizarTiempo, 60000);
-
-    function crearPetalo() {
-      const petalo = document.createElement("div");
-      petalo.className = "petalo";
-      petalo.textContent = "❀";
-      petalo.style.left = Math.random() * 100 + "vw";
-      petalo.style.animationDuration = (6 + Math.random() * 6) + "s";
-      document.body.appendChild(petalo);
-
-      setTimeout(() => petalo.remove(), 12000);
-    }
-
-    setInterval(crearPetalo, 400);
-
-    document.body.addEventListener("click", () => {
-      document.getElementById("polaroid").style.display = "flex";
-    });
   </script>
-
 </body>
 </html>
