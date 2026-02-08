@@ -2,79 +2,148 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Para ti, Ana Lú</title>
+  <title>Para Ana Lú 💙</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: #f5efe6;
       font-family: 'Georgia', serif;
+      background: #f2efe9;
       display: flex;
       justify-content: center;
       align-items: center;
-      text-align: center;
+      height: 100vh;
       overflow: hidden;
     }
 
-    .container {
-      max-width: 90%;
+    .contenedor {
+      text-align: center;
+      padding: 30px;
+      max-width: 420px;
+      background: #faf9f6;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      cursor: pointer;
     }
 
-    h1 {
-      font-size: 2.2em;
-      color: #5a6f5a;
-      opacity: 1;
-      transition: opacity 1s ease;
+    .texto-inicial {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #3d3d3d;
     }
 
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
+    .oculto {
+      display: none;
     }
 
-    .photo {
-      margin-top: 20px;
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-
-    .photo img {
-      width: 260px;
-      border: 10px solid white;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    .polaroid {
+      margin-top: 25px;
       background: white;
+      padding: 15px 15px 35px 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      border-radius: 6px;
+      animation: fadeIn 2s ease;
     }
 
-    .show {
-      opacity: 1;
+    .polaroid img {
+      width: 100%;
+      border-radius: 4px;
     }
 
-    .text {
-      margin-top: 15px;
-      font-size: 1.4em;
-      color: #6b4f4f;
+    .pregunta {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2f4f4f;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .petalo {
+      position: absolute;
+      top: -20px;
+      width: 8px;
+      height: 8px;
+      background: rgba(160, 190, 160, 0.7);
+      border-radius: 50%;
+      animation: caer linear infinite;
+    }
+
+    @keyframes caer {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
-<body onclick="reveal()">
-  <div class="container">
-    <h1 id="intro">
-      Han pasado muchos días desde que te conocí…<br>
-      y no necesito un día especial para amarte 💙
-    </h1>
+<body>
 
-    <div id="photo" class="photo">
-      <img src="IMG_2527.jpeg" alt="Nosotros">
-      <div class="text">¿Quieres ser mi San Valentín? 🌸</div>
-    </div>
+<div class="contenedor" onclick="mostrarContenido()">
+  <div class="texto-inicial">
+    Han pasado<br>
+    <strong id="contador"></strong><br>
+    desde que te conocí…<br><br>
+
+    y cada día que pasa confirma lo que sentí esa primera vez.<br><br>
+
+    No necesito un día especial para amarte,<br>
+    pero sí uno para preguntarte esto…
   </div>
 
-  <script>
-    function reveal() {
-      document.getElementById('intro').classList.add('hidden');
-      document.getElementById('photo').classList.add('show');
+  <div id="contenido" class="oculto">
+    <div class="polaroid">
+      <img src="IMG_2527.jpeg" alt="Nosotros">
+    </div>
+
+    <div class="pregunta">
+      ¿Quieres ser mi San Valentín? ❤️
+    </div>
+  </div>
+</div>
+
+<script>
+  // Fecha de inicio: 23 de agosto de 2025
+  const inicio = new Date("2025-08-23T00:00:00");
+
+  function actualizarContador() {
+    const ahora = new Date();
+    const diferencia = ahora - inicio;
+
+    const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+    const segundos = Math.floor((diferencia / 1000) % 60);
+
+    document.getElementById("contador").innerText =
+      `${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+  }
+
+  setInterval(actualizarContador, 1000);
+  actualizarContador();
+
+  function mostrarContenido() {
+    document.getElementById("contenido").style.display = "block";
+    crearPetalos();
+  }
+
+  function crearPetalos() {
+    for (let i = 0; i < 25; i++) {
+      const petalo = document.createElement("div");
+      petalo.className = "petalo";
+      petalo.style.left = Math.random() * 100 + "vw";
+      petalo.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(petalo);
+
+      setTimeout(() => petalo.remove(), 8000);
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
